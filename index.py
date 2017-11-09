@@ -52,5 +52,5 @@ def lambda_handler(event, context):
             logger.info('-----------------------------------------------------------')
             return True
         except ClientError as e:
-            error = e.response['Error']['Code'] == 'EntityAlreadyExists'
+            error = e.response['Error']['Code']
             logger.info('Unexpected error: ' + error)
