@@ -5,9 +5,11 @@ Parameters:
   Bucket:
     Description: The S3 Bucket which contains the code zipped. Example -> MyBucketName
     Type: String
-  Key:
+    Default: MyBucketName
+  FileKey:
     Description: Key path for your code zipped. Example -> /path/myfile.zip
     Type: String
+    Default: "myfile.zip"
 
 Resources:
   CreateAMIasBackup:
@@ -16,7 +18,9 @@ Resources:
       Handler: index.lambda_handler
       Runtime: python2.7
       Policies: AmazonEC2FullAccess
-      CodeUri: !Sub s3://${Bucket}/${Key}
+      CodeUri:
+        Bucket: !Ref Bucket
+        Key: !Ref FileKey
       Events:
         Cron:
           Type: Schedule

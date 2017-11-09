@@ -32,7 +32,7 @@ def lambda_handler(event, context):
                 Description='[DO NOT DEREGISTER] - AMI created by Lambda function as automated backup {0}'.format(instance.id),
                 NoReboot=True,
             )
-            logger.info('AMI CREATED, ID: %s' % ami_id)
+            logger.info('AMI CREATED ID: ' + ami_id)
             ami_id.create_tags(
                 Tags=[
                     {
@@ -51,6 +51,6 @@ def lambda_handler(event, context):
             )
             logger.info('-----------------------------------------------------------')
             return True
-        except ClientError as e:
-            error = e.response['Error']['Code'] == 'EntityAlreadyExists'
+        except ClientError as err:
+            error = err.response['Error']['Code']
             logger.info('Unexpected error: ' + error)
