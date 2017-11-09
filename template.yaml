@@ -1,14 +1,22 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 
+Parameters:
+  Bucket:
+    Description: The S3 Bucket which contains the code zipped. Example -> MyBucketName
+    Type: String
+  Key:
+    Description: Key path for your code zipped. Example -> /path/myfile.zip
+    Type: String
+
 Resources:
   CreateAMIasBackup:
     Type: AWS::Serverless::Function
     Properties:
       Handler: index.lambda_handler
       Runtime: python2.7
-      Policies: AWSLambdaDynamoDBExecutionRole
-      CodeUri: s3://marcuram/create-ami-as-backup.zip
+      Policies: AmazonEC2FullAccess
+      CodeUri: !Sub s3://${Bucket}/${Key}
       Events:
         Cron:
           Type: Schedule
