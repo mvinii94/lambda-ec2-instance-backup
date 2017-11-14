@@ -12,7 +12,7 @@ logger.setLevel(logging.INFO)
 # This function generates an AMI of all instances which is running with the TAG key equals to "backup" and its value as "yes"
 ###
 
-instance_iterator = ec2.instances.filter(
+tagged_instances = ec2.instances.filter(
     Filters=[
         {'Name': 'instance-state-name', 'Values': ['running']},
         {'Name': 'tag:backup', 'Values': ['yes']}
@@ -21,7 +21,7 @@ instance_iterator = ec2.instances.filter(
 
 def lambda_handler(event, context):
 
-    for instance in instance_iterator:
+    for instance in tagged_instances:
         current_datetime = datetime.datetime.now()
         full_date_stamp = current_datetime.strftime("%Y-%m-%d-%Hh%M-%S")
         logger.info('-----------------------------------------------------------')
