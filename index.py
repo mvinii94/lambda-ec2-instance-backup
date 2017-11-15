@@ -41,7 +41,7 @@ def lambda_handler(event, context):
                     },
                     {
                         'Key': 'backup',
-                        'Value': 'lambda'
+                        'Value': 'lambda-ec2-instance-backup'
                     },
                     {
                         'Key': 'Name',

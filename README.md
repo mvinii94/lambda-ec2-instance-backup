@@ -34,6 +34,10 @@ Available Rate Expressions: [ScheduleEvents](http://docs.aws.amazon.com/AmazonCl
 aws cloudformation deploy --template-file template.yaml --stack-name lambda-ec2-instance-backup --region us-east-1 --capabilities CAPABILITY_IAM --parameter-overrides Bucket=<MyBucketName> FileKey=lambda-ec2-instance-backup.zip
 ```
 
+## Managing
+
+IMPORTANT: This Serverless solution creates AMIs on your beahlf, if you want to control the AMIs rentention created by this solution, please see the solution [lambda-ec2-deregister-amis](https://github.com/mvinii94/lambda-ec2-deregister-old-amis)
+
 ## Authors
 
 * **Marcus Ramos** - [GitHub](https://github.com/mvinii94/)
