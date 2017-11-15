@@ -32,7 +32,7 @@ def lambda_handler(event, context):
                 Description='[DO NOT DEREGISTER] - AMI created by Lambda function as automated backup {0}'.format(instance.id),
                 NoReboot=True,
             )
-            logger.info('AMI CREATED ID: ' + ami_id)
+            logger.info('AMI CREATED ID: ' + str(ami_id))
             ami_id.create_tags(
                 Tags=[
                     {
