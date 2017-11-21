@@ -42,7 +42,6 @@ Resources:
             Version: '2012-10-17'
             Statement:
               Action:
-                - iam:GetUser
                 - ec2:Describe*
                 - ec2:CreateSnapshot
                 - ec2:CreateImage
