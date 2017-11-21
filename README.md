@@ -12,7 +12,13 @@ Lambda Function (index.py)
 
 The Lambda function will register Amazon Machine Images (AMI) from all EC2 instances in running state AND with the tag "backup" set as "yes" each hour. If you want to change the period of backup generation you can change the lines:
 
-https://github.com/mvinii94/lambda-ec2-instance-backup/blob/79036e9717f36aab79833d7e58c2925074d18fd0/template.yaml#L20-L24
+```yaml
+Events:
+  Cron:
+    Type: Schedule
+    Properties:
+      Schedule: rate(1 day)
+```
 
 Available Rate Expressions: [ScheduleEvents](http://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#RateExpressions)
 
@@ -31,7 +37,7 @@ Available Rate Expressions: [ScheduleEvents](http://docs.aws.amazon.com/AmazonCl
 * Run the following command providing the bucket name and the S3 key name toof your file:
 
 ```
-aws cloudformation deploy --template-file template.yaml --stack-name lambda-ec2-instance-backup --region us-east-1 --capabilities CAPABILITY_IAM --parameter-overrides Bucket=<MyBucketName> FileKey=lambda-ec2-instance-backup.zip
+aws cloudformation deploy --template-file template.yaml --stack-name lambda-ec2-instance-backup --region us-east-1 --capabilities CAPABILITY_NAMED_IAM --parameter-overrides Bucket=<MyBucketName> FileKey=lambda-ec2-instance-backup.zip
 ```
 
 ## Managing

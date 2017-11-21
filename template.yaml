@@ -12,12 +12,53 @@ Parameters:
     Default: "myfile.zip"
 
 Resources:
+  #LambdaRole
+  LambdaRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Path: /
+      Policies:
+        - PolicyName: LogsPermission
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              Action:
+                - 'logs:CreateLogGroup'
+                - 'logs:CreateLogStream'
+                - 'logs:PutLogEvents'
+              Resource: 'arn:aws:logs:*:*:*'
+              Effect: Allow
+        - PolicyName: CreateAMIPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              Action:
+                - iam:GetUser
+                - ec2:Describe*
+                - ec2:CreateSnapshot
+                - ec2:CreateImage
+                - ec2:CreateVolume
+                - ec2:RegisterImage
+                - ec2:CreateTags
+              Resource: "*"
+              Effect: Allow
+
+  #Lambda Function
   CreateAMIasBackup:
     Type: AWS::Serverless::Function
     Properties:
       Handler: index.lambda_handler
       Runtime: python2.7
-      Policies: AmazonEC2FullAccess
+      Role: !GetAtt LambdaRole.Arn
       Timeout: 300
       CodeUri:
         Bucket: !Ref Bucket
